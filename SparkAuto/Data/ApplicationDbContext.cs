@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SparkAuto.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,7 @@ namespace SparkAuto.Data
             : base(options)
         {
         }
+
+        public DbSet<ServiceType> ServiceTypes { get; set; }
     }
 }
