@@ -46,30 +46,34 @@ namespace SparkAuto.Pages.ServiceTypes
                 return Page();
             }
 
-            _db.Attach(ServiceType).State = EntityState.Modified;
+            var serviceFromDb = await _db.ServiceTypes.FirstOrDefaultAsync(s => s.Id == ServiceType.Id);
+            //_db.Attach(ServiceType).State = EntityState.Modified;
+            serviceFromDb.Name = ServiceType.Name;
+            serviceFromDb.Price = ServiceType.Price;
+            await _db.SaveChangesAsync();
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ServiceTypeExists(ServiceType.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //try
+            //{
+            //    await _db.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!ServiceTypeExists(ServiceType.Id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
 
             return RedirectToPage("./Index");
         }
 
-        private bool ServiceTypeExists(int id)
-        {
-            return _db.ServiceTypes.Any(e => e.Id == id);
-        }
+        //private bool ServiceTypeExists(int id)
+        //{
+        //    return _db.ServiceTypes.Any(e => e.Id == id);
+        //}
     }
 }
